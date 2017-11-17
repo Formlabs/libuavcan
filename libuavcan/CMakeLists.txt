@@ -75,7 +75,9 @@ include_directories(include)
 # libuavcan
 #
 file(GLOB_RECURSE LIBUAVCAN_CXX_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cpp")
-add_library(uavcan STATIC ${LIBUAVCAN_CXX_FILES})
+file(GLOB_RECURSE LIBUAVCAN_HXX_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "include/*.hpp")
+add_library(uavcan STATIC ${LIBUAVCAN_CXX_FILES} ${LIBUAVCAN_HXX_FILES})
+target_include_directories(uavcan PUBLIC include/dsdlc_generated)
 add_dependencies(uavcan libuavcan_dsdlc)
 
 install(TARGETS uavcan                            DESTINATION lib)
