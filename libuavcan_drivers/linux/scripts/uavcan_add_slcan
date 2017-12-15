@@ -77,7 +77,7 @@ function deinitialize() {
     echo "Stopping slcand..." >&2
     # Trying SIGINT first
     killall -INT slcand &> /dev/null
-    sleep 0.3
+    sleep 1
     # Then trying the default signal, which is SIGTERM, if SIGINT didn't help
     slcand_kill_retries=10
     while killall slcand &> /dev/null
