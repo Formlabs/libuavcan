@@ -55,13 +55,13 @@ include_directories(${DSDLC_OUTPUT})
 # Compiler flags
 #
 if (COMPILER_IS_GCC_COMPATIBLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wundef")
+    add_compile_options(-Wall -Wextra -Wundef)
     if (UAVCAN_USE_CPP03)
         message(STATUS "Using C++03")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++03 -Wno-variadic-macros -Wno-long-long")
+        add_compile_options(-std=c++03 -Wno-variadic-macros -Wno-long-long)
     else ()
         message(STATUS "Using C++11 (pass UAVCAN_USE_CPP03=1 to override)")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+        add_compile_options("-std=c++11")
     endif ()
 endif ()
 
@@ -124,13 +124,13 @@ if (DEBUG_BUILD)
 
     if (COMPILER_IS_GCC_COMPATIBLE)
         # No such thing as too many warnings
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -pedantic -Wfloat-equal -Wconversion")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsign-conversion -Wcast-align -Wmissing-declarations -Wlogical-op")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdouble-promotion -Wswitch-enum -Wtype-limits -Wno-error=array-bounds")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wzero-as-null-pointer-constant -Wnon-virtual-dtor")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Woverloaded-virtual -Wsign-promo -Wold-style-cast")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=deprecated-declarations")
-        #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++ -Wno-error=effc++")  # Produces heaps of useless warnings
+        add_compile_options(-Wall -Wextra -Werror -pedantic -Wfloat-equal -Wconversion)
+        add_compile_options(-Wsign-conversion -Wcast-align -Wmissing-declarations -Wlogical-op)
+        add_compile_options(-Wdouble-promotion -Wswitch-enum -Wtype-limits -Wno-error=array-bounds)
+        add_compile_options(-Wzero-as-null-pointer-constant -Wnon-virtual-dtor)
+        add_compile_options(-Woverloaded-virtual -Wsign-promo -Wold-style-cast)
+        add_compile_options(-Wno-error=deprecated-declarations)
+        #add_compile_options(-Weffc++ -Wno-error=effc++")  # Produces heaps of useless warnings
         set(cpp03_flags "-std=c++03 -Wno-variadic-macros -Wno-long-long -Wno-zero-as-null-pointer-constant")
         set(optim_flags "-O3 -DNDEBUG -g0")
     else ()
