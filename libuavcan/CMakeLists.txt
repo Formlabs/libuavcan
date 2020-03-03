@@ -36,7 +36,7 @@ endif ()
 #
 execute_process(COMMAND ${PYTHON} setup.py build WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dsdl_compiler OUTPUT_QUIET)
 set(DSDLC_INPUTS "test/dsdl_test/root_ns_a" "test/dsdl_test/root_ns_b" "${CMAKE_CURRENT_SOURCE_DIR}/../dsdl/uavcan")
-set(DSDLC_OUTPUT "include/dsdlc_generated")
+set(DSDLC_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/include/dsdlc_generated")
 
 set(DSDLC_INPUT_FILES "")
 foreach(DSDLC_INPUT ${DSDLC_INPUTS})
@@ -79,7 +79,8 @@ file(GLOB_RECURSE LIBUAVCAN_HXX_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "incl
 add_library(uavcan STATIC ${LIBUAVCAN_CXX_FILES} ${LIBUAVCAN_HXX_FILES} ${DSDLC_OUTPUT_FILES})
 set_property(TARGET uavcan PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_include_directories(uavcan PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/dsdlc_generated>
+    $<BUILD_INTERFACE:${DSDLC_OUTPUT}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 add_dependencies(uavcan libuavcan_dsdlc)
 
